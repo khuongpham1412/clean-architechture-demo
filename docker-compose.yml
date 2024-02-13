@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+  webapi:
+    #image: your-app-image:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: webapi
+    ports:
+      - "44348:80"
+    depends_on:
+      - sqlserverdb
+    networks:
+      - application-network
+    volumes:
+      - webapi-data:/app/data
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__DefaultConnection: "Server=sqlserverdb;Database=StorageSystem;User=sa;Password=r00t.R00T"
+
+  sqlserverdb:
+    image: mcr.microsoft.com/azure-sql-edge:latest
+    container_name: sqlserverdb
+    cap_add: [ 'SYS_PTRACE' ]
+    environment:
+      - "ACCEPT_EULA=1"
+      - "MSSQL_USER=sa"
+      - "MSSQL_SA_PASSWORD=r00t.R00T"
+    ports:
+      - "1435:1433"
+    networks:
+      - application-network
+    restart: always
+    volumes:
+      - "mssql-azuresql-edge-data:/var/opt/mssql"
+
+  elasticsearch:
+    container_name: elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.16
+    volumes:
+      - es-data:/usr/share/elasticsearch/data
+    environment:
+      - xpack.monitoring.enabled=true
+      - xpack.watcher.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - discovery.type=single-node
+    networks:
+      - application-network
+    ports:
+      - "9200:9200"
+
+  kibana:
+    container_name: kibana
+    image: docker.elastic.co/kibana/kibana:7.17.16
+    environment:  
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+    networks:
+      - application-network
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+
+networks:
+  application-network:
+    driver: bridge
+    
+volumes:
+  webapi-data:
+  mssql-azuresql-edge-data:
+  es-data:

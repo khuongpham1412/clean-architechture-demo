@@ -1,0 +1,52 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Contracts\Apis\**" />
+    <Compile Remove="Contracts\Providers\**" />
+    <Compile Remove="Contracts\Services\Features\**" />
+    <Compile Remove="Models\Apis\**" />
+    <Compile Remove="Models\ProductImage\Base\**" />
+    <EmbeddedResource Remove="Contracts\Apis\**" />
+    <EmbeddedResource Remove="Contracts\Providers\**" />
+    <EmbeddedResource Remove="Contracts\Services\Features\**" />
+    <EmbeddedResource Remove="Models\Apis\**" />
+    <EmbeddedResource Remove="Models\ProductImage\Base\**" />
+    <None Remove="Contracts\Apis\**" />
+    <None Remove="Contracts\Providers\**" />
+    <None Remove="Contracts\Services\Features\**" />
+    <None Remove="Models\Apis\**" />
+    <None Remove="Models\ProductImage\Base\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="11.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+    <PackageReference Include="MailKit" Version="3.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.23" />
+    <PackageReference Include="MimeKit" Version="3.2.0" />
+    <PackageReference Include="NPOI" Version="2.6.2" />
+    <PackageReference Include="OneOf" Version="3.0.263" />
+    <PackageReference Include="StackExchange.Redis" Version="2.7.10" />
+    <PackageReference Include="StackExchange.Redis.Extensions.AspNetCore" Version="10.0.2" />
+    <PackageReference Include="StackExchange.Redis.Extensions.Core" Version="10.0.2" />
+    <PackageReference Include="StackExchange.Redis.Extensions.Newtonsoft" Version="10.0.2" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\Auth\Outs\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\StorageSystem.Domain\StorageSystem.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
